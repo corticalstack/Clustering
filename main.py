@@ -92,7 +92,7 @@ class Clustering:
 
         if is_pca:
             n_comp = 3 if is_3d else 2
-            pca = PCA(n_components=n_comp)
+            pca = PCA(n_components=n_comp, random_state=self.random_state)
             df_x = pca.fit_transform(df_x)
 
         if isinstance(df_x, pd.DataFrame):
@@ -110,7 +110,7 @@ class Clustering:
 
         plt.title(title)
 
-        kmeans = KMeans(n_clusters=self.n_clusters)
+        kmeans = KMeans(n_clusters=self.n_clusters, random_state=self.random_state)
         kmeans.fit(df_x)
         y_km = kmeans.fit_predict(df_x)
 
