@@ -82,13 +82,6 @@ class Clustering:
         # 3D clustering with PCA
         self.cluster(idx=self.pca_idx, projection='3d')
 
-    def encode(self):
-        le = preprocessing.LabelEncoder()
-        self.x = self.dataset.iloc[:, :-4]
-        self.x = self.x.apply(le.fit_transform)
-        sc = StandardScaler()
-        self.x = pd.DataFrame(sc.fit_transform(self.x), columns=self.x.columns)
-
     def cluster(self, idx, projection=None):
         is_pca = True if 'pca' in idx else False
         is_3d = True if projection == '3d' else False
@@ -217,6 +210,13 @@ class Clustering:
     def set_x_y(self, ds):
         self.x = ds.iloc[:, :-4]
         self.y = ds.iloc[:, -1].values
+
+    def encode(self):
+        le = preprocessing.LabelEncoder()
+        self.x = self.dataset.iloc[:, :-4]
+        self.x = self.x.apply(le.fit_transform)
+        sc = StandardScaler()
+        self.x = pd.DataFrame(sc.fit_transform(self.x), columns=self.x.columns)
 
     def set_indexes(self):
         self.feature_idx[0] = self.dataset.columns.get_loc('duration')
