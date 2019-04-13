@@ -17,6 +17,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 class Clustering:
     def __init__(self):
+        self.sc = StandardScaler()
         self.n_clusters = 5
         self.colours = ['black', 'blue', 'red', 'cyan', 'green']
         self.ac_count = {}
@@ -215,8 +216,7 @@ class Clustering:
         le = preprocessing.LabelEncoder()
         self.x = self.dataset.iloc[:, :-4]
         self.x = self.x.apply(le.fit_transform)
-        sc = StandardScaler()
-        self.x = pd.DataFrame(sc.fit_transform(self.x), columns=self.x.columns)
+        self.x = pd.DataFrame(self.sc.fit_transform(self.x), columns=self.x.columns)
 
     def set_indexes(self):
         self.feature_idx[0] = self.dataset.columns.get_loc('duration')
